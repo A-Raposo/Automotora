@@ -5,9 +5,9 @@ public class Vehiculo {
     private Color color;
     private int año;
     private double kilometraje;
-    private int precio;
+    private double precio;
 
-    public Vehiculo(Marca marca,Color color, int año, double kilometraje, int precio) {
+    public Vehiculo(Marca marca,Color color, int año, double kilometraje, double precio) {
         this.marca = marca;
         this.color = color;
         this.año = año;

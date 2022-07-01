@@ -1,6 +1,6 @@
 package Ventanas;
 
-import modelo.Automotora;
+import modelo.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,35 +8,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaClientes extends Ventana implements ActionListener {
-    private Automotora automotora = new Automotora();
+
+    public VentanaClientes() {
+        lamina.setVisible(true);
+        laminaAgregar.setVisible(false);
+        laminaModificar.setVisible(false);
+        lamina();
+        laminaAgregar();
+        laminaModificar();
+        add(lamina);
+        add(laminaAgregar);
+        add(laminaModificar);
+    }
+
+    private JPanel laminabotones = new JPanel();
     private JButton boton = new JButton("Agregar");
     private JButton boton1 = new JButton("Modificar");
     private JButton boton2 = new JButton("Eliminar");
     private JButton boton3 = new JButton("Atras");
-    public VentanaClientes() {
-        setLayout(new GridBagLayout());
-        lamina();
-        laminaAgregar();
-        laminaModificar();
-        laminaEliminar();
-        lamina.setVisible(true);
-        lamina1.setVisible(false);
-        lamina2.setVisible(false);
-        lamina3.setVisible(false);
-        add(lamina);
-        add(lamina1);
-        add(lamina2);
-        add(lamina3);
-    }
-    private void lamina() {
-        lamina.add(boton,constraints);
-        constraints.gridy = 1;
-        lamina.add(boton1,constraints);
-        constraints.gridy = 2;
-        lamina.add(boton2,constraints);
-        constraints.gridy = 3;
-        lamina.add(boton3,constraints);
 
+    private JList lista = new JList<>(automotora.getCliente().toArray());
+    private JScrollPane laminalista = new JScrollPane(lista);
+
+
+    private void lamina(){
+        lamina.add(laminalista,constraints);
+
+        laminabotones.add(boton);
+        laminabotones.add(boton1);
+        laminabotones.add(boton2);
+        laminabotones.add(boton3);
+
+        constraints.gridy = 1;
+        lamina.add(laminabotones,constraints);
         boton.addActionListener(this);
         boton1.addActionListener(this);
         boton2.addActionListener(this);
@@ -49,20 +53,20 @@ public class VentanaClientes extends Ventana implements ActionListener {
 
         if(seleccion == boton){
             lamina.setVisible(false);
-            lamina1.setVisible(true);
+            laminaAgregar.setVisible(true);
         }else if (seleccion == boton1){
             lamina.setVisible(false);
-            lamina2.setVisible(true);
+            laminaModificar.setVisible(true);
 
         }else if (seleccion == boton2){
-            lamina.setVisible(false);
-            lamina3.setVisible(true);
+            automotora.eliminarCliente(lista.getSelectedIndex());
+            lista.setListData(automotora.getCliente().toArray());
         }else if (seleccion == boton3) {
             new VentanaPrincipal();
             this.dispose();
         }else if (seleccion == boton4) {
             automotora.agregarCliente(texto,texto1,texto2,texto3,texto4,texto5);
-            JOptionPane.showMessageDialog(lamina1,"Agregado exitosamente");
+            JOptionPane.showMessageDialog(laminaAgregar,"Agregado exitosamente");
             texto.setText(null);
             texto1.setText(null);
             texto2.setText(null);
@@ -70,10 +74,12 @@ public class VentanaClientes extends Ventana implements ActionListener {
             texto4.setText(null);
             texto5.setText(null);
         }else if (seleccion == boton5) {
-            lamina1.setVisible(false);
+            lista.setListData(automotora.getCliente().toArray());
+            laminaAgregar.setVisible(false);
             lamina.setVisible(true);
         }else if (seleccion == boton6) {
-            JOptionPane.showMessageDialog(lamina2,"Modificado Exitosamente");
+            automotora.modificarCliente(lista.getSelectedIndex(),texto6,texto7,texto8,texto9,texto10,texto11);
+            JOptionPane.showMessageDialog(laminaModificar,"Modificado Exitosamente");
             texto.setText(null);
             texto1.setText(null);
             texto2.setText(null);
@@ -81,21 +87,13 @@ public class VentanaClientes extends Ventana implements ActionListener {
             texto4.setText(null);
             texto5.setText(null);
         }else if (seleccion == boton7) {
-            lamina2.setVisible(false);
-            lamina.setVisible(true);
-        }else if (seleccion == boton8) {
-            JOptionPane.showMessageDialog(lamina3,"Eliminado exitosamente");
-            automotora.eliminarCliente(lista.getSelectedIndex());
-            lista.removeItemAt(lista.getSelectedIndex());
-            area.setText(automotora.getCliente().toString());
-        }else if (seleccion == boton9) {
-            //lista.removeAllItems();
-            lamina3.setVisible(false);
+            lista.setListData(automotora.getCliente().toArray());
+            laminaModificar.setVisible(false);
             lamina.setVisible(true);
         }
     }
-    private JPanel lamina1 = new JPanel(new GridBagLayout());
-    private JPanel laminabotones = new JPanel();
+    private JPanel laminaAgregar = new JPanel(new GridBagLayout());
+    private JPanel laminaboton = new JPanel();
 
     private JLabel etiqueta = new JLabel("Nombre:");
     private JLabel etiqueta1 = new JLabel("Rut:");
@@ -117,37 +115,40 @@ public class VentanaClientes extends Ventana implements ActionListener {
     private void laminaAgregar(){
         constraints.gridy = 0;
         constraints.gridwidth = 1;
-        lamina1.add(etiqueta,constraints);
-        lamina1.add(texto,constraints);
+        laminaAgregar.add(etiqueta,constraints);
+        laminaAgregar.add(texto,constraints);
         constraints.gridy = 1;
-        lamina1.add(etiqueta1,constraints);
-        lamina1.add(texto1,constraints);
+        laminaAgregar.add(etiqueta1,constraints);
+        laminaAgregar.add(texto1,constraints);
         constraints.gridy = 2;
-        lamina1.add(etiqueta2,constraints);
-        lamina1.add(texto2,constraints);
+        laminaAgregar.add(etiqueta2,constraints);
+        laminaAgregar.add(texto2,constraints);
         constraints.gridy = 3;
-        lamina1.add(etiqueta3,constraints);
-        lamina1.add(texto3,constraints);
+        laminaAgregar.add(etiqueta3,constraints);
+        laminaAgregar.add(texto3,constraints);
         constraints.gridy = 4;
-        lamina1.add(etiqueta4,constraints);
-        lamina1.add(texto4,constraints);
+        laminaAgregar.add(etiqueta4,constraints);
+        laminaAgregar.add(texto4,constraints);
         constraints.gridy = 5;
-        lamina1.add(etiqueta5,constraints);
-        lamina1.add(texto5,constraints);
+        laminaAgregar.add(etiqueta5,constraints);
+        laminaAgregar.add(texto5,constraints);
 
         constraints.gridy = 6;
         constraints.gridwidth = 2;
-        laminabotones.add(boton4);
-        laminabotones.add(boton5);
-        lamina1.add(laminabotones,constraints);
+        laminaboton.add(boton4);
+        laminaboton.add(boton5);
+        laminaAgregar.add(laminaboton,constraints);
 
         boton4.addActionListener(this);
         boton5.addActionListener(this);
 
+        texto2.addKeyListener(new Datos.ingresoTeclado(texto2));
+        texto4.addKeyListener(new Datos.ingresoTeclado(texto4));
+
     }
 
-    private JPanel lamina2 = new JPanel(new GridBagLayout());
-    private JPanel laminabotones2 = new JPanel();
+    private JPanel laminaModificar = new JPanel(new GridBagLayout());
+    private JPanel laminaboton2 = new JPanel();
 
     private JLabel etiqueta6 = new JLabel("Nombre:");
     private JLabel etiqueta7 = new JLabel("Rut:");
@@ -169,70 +170,34 @@ public class VentanaClientes extends Ventana implements ActionListener {
     private void laminaModificar(){
         constraints.gridy = 0;
         constraints.gridwidth = 1;
-        lamina2.add(etiqueta6,constraints);
-        lamina2.add(texto6,constraints);
+        laminaModificar.add(etiqueta6,constraints);
+        laminaModificar.add(texto6,constraints);
         constraints.gridy = 1;
-        lamina2.add(etiqueta7,constraints);
-        lamina2.add(texto7,constraints);
+        laminaModificar.add(etiqueta7,constraints);
+        laminaModificar.add(texto7,constraints);
         constraints.gridy = 2;
-        lamina2.add(etiqueta8,constraints);
-        lamina2.add(texto8,constraints);
+        laminaModificar.add(etiqueta8,constraints);
+        laminaModificar.add(texto8,constraints);
         constraints.gridy = 3;
-        lamina2.add(etiqueta9,constraints);
-        lamina2.add(texto9,constraints);
+        laminaModificar.add(etiqueta9,constraints);
+        laminaModificar.add(texto9,constraints);
         constraints.gridy = 4;
-        lamina2.add(etiqueta10,constraints);
-        lamina2.add(texto10,constraints);
+        laminaModificar.add(etiqueta10,constraints);
+        laminaModificar.add(texto10,constraints);
         constraints.gridy = 5;
-        lamina2.add(etiqueta11,constraints);
-        lamina2.add(texto11,constraints);
+        laminaModificar.add(etiqueta11,constraints);
+        laminaModificar.add(texto11,constraints);
 
         constraints.gridy = 6;
         constraints.gridwidth = 2;
-        laminabotones2.add(boton6);
-        laminabotones2.add(boton7);
-        lamina2.add(laminabotones2,constraints);
+        laminaboton2.add(boton6);
+        laminaboton2.add(boton7);
+        laminaModificar.add(laminaboton2,constraints);
 
         boton6.addActionListener(this);
         boton7.addActionListener(this);
-    }
 
-    private JPanel lamina3 = new JPanel(new GridBagLayout());
-    private JPanel laminabotones3 = new JPanel();
-
-    private JTextArea area = new JTextArea(20,40);
-    private JScrollPane laminaArea = new JScrollPane(area);
-
-    private JComboBox lista = new JComboBox<>();
-
-    private JLabel etiqueta12 = new JLabel("Posición");
-
-    private JButton boton8 =new JButton("eliminar");
-    private JButton boton9 =new JButton("cancelar");
-
-    private void laminaEliminar(){
-        for (int i = 0; i < automotora.getCliente().size(); i++) {
-            lista.addItem(automotora.getCliente().get(i));
-        }
-            area.setText(automotora.getCliente().toString());
-
-        area.setEditable(false);
-        constraints.gridy = 0;
-        constraints.gridwidth = 2;
-        lamina3.add(laminaArea,constraints);
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        lamina3.add(etiqueta12,constraints);
-        lamina3.add(lista,constraints);
-
-        constraints.gridy = 2;
-        constraints.gridwidth = 2;
-        laminabotones3.add(boton8);
-        laminabotones3.add(boton9);
-        lamina3.add(laminabotones3,constraints);
-
-        boton8.addActionListener(this);
-        boton9.addActionListener(this);
-
+        texto8.addKeyListener(new Datos.ingresoTeclado(texto8));
+        texto10.addKeyListener(new Datos.ingresoTeclado(texto10));
     }
 }
