@@ -1,12 +1,16 @@
 package Ventanas;
 
 
+import Datos.Archivo;
 import modelo.Color;
 import modelo.Marca;
+import modelo.Vehiculo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class VentanaVehiculos extends Ventana implements ActionListener {
@@ -45,8 +49,9 @@ public class VentanaVehiculos extends Ventana implements ActionListener {
         }else if (seleccion == boton1){
             lamina.setVisible(false);
             laminaBuscar.setVisible(true);
-
         }else if (seleccion == boton2){
+            new Archivo().guardarClientes(automotora);
+            new Archivo().guardarVehiculos(automotora);
             new VentanaPrincipal();
             this.dispose();
         }else if (seleccion == boton3) {
@@ -62,7 +67,10 @@ public class VentanaVehiculos extends Ventana implements ActionListener {
             lamina.setVisible(true);
 
         }else if (seleccion == boton5) {
-            area.setText(automotora.buscarVehiculo(lista2.getSelectedItem()).toString());
+            ArrayList<Vehiculo> busqueda = automotora.buscarVehiculo(lista2.getSelectedItem());
+            for (int i = 0; i < busqueda.size(); i++) {
+                area.append(busqueda.get(i).toString()+"\n");
+            }
 
         }else if (seleccion == boton6) {
             laminaBuscar.setVisible(false);
@@ -132,7 +140,6 @@ public class VentanaVehiculos extends Ventana implements ActionListener {
     private JButton boton6 = new JButton("atras");
 
     private void laminaBuscar() {
-
         area.setEditable(false);
         constraints.gridy = 0;
         constraints.gridwidth = 2;

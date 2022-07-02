@@ -17,8 +17,8 @@ public class Vehiculo {
 
     @Override
     public String toString() {
-        return  "Marca: " + marca + " Color: " + color + " año: " + año +
-                " KM: " + kilometraje + " Precio: " + precio+"\n";
+        return  "\r"+"Marca:" + marca + " Color:" + color + " año:" + año +
+                " KM:" + kilometraje + " Precio:" + precio;
     }
 
     public Marca getMarca() {

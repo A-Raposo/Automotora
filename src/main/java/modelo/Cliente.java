@@ -14,6 +14,6 @@ public class Cliente extends Persona{
 
     @Override
     public String toString() {
-        return "Nombre:" + nombre + " Rut:" + rut + " Edad:" + edad + " Domicilio:" + domicilio + " Telefono:" + numTelefono + " Correo:" + correo + "\n";
+        return "\r" + "Nombre:" + nombre + " Rut:" + rut + " Edad:" + edad + " Domicilio:" + domicilio + " Telefono:" + numTelefono + " Correo:" + correo;
     }
 }

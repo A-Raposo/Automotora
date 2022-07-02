@@ -1,5 +1,7 @@
 package Ventanas;
 
+import Datos.Archivo;
+import modelo.Automotora;
 import modelo.Cliente;
 
 import javax.swing.*;
@@ -8,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaClientes extends Ventana implements ActionListener {
-
     public VentanaClientes() {
         lamina.setVisible(true);
         laminaAgregar.setVisible(false);
@@ -62,6 +63,8 @@ public class VentanaClientes extends Ventana implements ActionListener {
             automotora.eliminarCliente(lista.getSelectedIndex());
             lista.setListData(automotora.getCliente().toArray());
         }else if (seleccion == boton3) {
+            new Archivo().guardarClientes(automotora);
+            new Archivo().guardarVehiculos(automotora);
             new VentanaPrincipal();
             this.dispose();
         }else if (seleccion == boton4) {

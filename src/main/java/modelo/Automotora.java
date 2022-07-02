@@ -1,16 +1,26 @@
 package modelo;
 
+import Datos.GestorArchivo;
+
 import javax.swing.*;
 import java.util.*;
+import Util.*;
 
 public class Automotora {
     private ArrayList<Vehiculo> vehiculo = new ArrayList<>();
-    private ArrayList<Vendedor> vendedor = new ArrayList<>();
     private ArrayList<Cliente> cliente = new ArrayList<>();
+    private GestorArchivo ga = new GestorArchivo();
     public Automotora() {
-        agregarVehiculo();
-        agregarCliente();
+        if (ga.leerArchivo("Clientes.txt") == "") {
+            agregarVehiculo();
+            agregarCliente();
+        }else{
+            cliente = new GeneradorArray().crearArregloClientes();
+            vehiculo = new GeneradorArray().crearArregloVehiculos();
+        }
     }
+
+
 
     private void agregarVehiculo(){
         vehiculo.add(new Vehiculo(Marca.VOLVO,Color.NEGRO,2020,100,5000000));
@@ -42,25 +52,16 @@ public class Automotora {
         return  vehiculoBuscado;
     }
 
-    private void agregarVendedor(){
-        vendedor.add(new Vendedor("A","1",28,24));
-        vendedor.add(new Vendedor("C","2",26,12));
-        vendedor.add(new Vendedor("B","3",28,24));
-        vendedor.add(new Vendedor("D","1",27,10));
-        vendedor.add(new Vendedor("E","4",27,10));
-        vendedor.add(new Vendedor("F","5",27,10));
-        vendedor.add(new Vendedor("G","6",27,10));
-    }
 
     private void agregarCliente(){
         cliente.add(new Cliente("Juan","111111111",20,"Av.siempreViva",12345678,"CORREOJUAN"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
-        cliente.add(new Cliente("Ana","222222222",28,"PENSILVANIA",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Agustin","222222222",23,"PENSILVANIA",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Paulina","222222222",28,"TEMUCO",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Patricia","222222222",21,"CONCEPCION",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Nicolas","222222222",28,"MAIMI",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Anto","222222222",23,"TEMUCO",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Benjamin","222222222",28,"SANTIAGO",87654321,"CORREOANA"));
+        cliente.add(new Cliente("Ana","222222222",38,"LAUTARO",87654321,"CORREOANA"));
     }
 
     public void agregarCliente(JTextField texto,JTextField texto1,JTextField texto2,JTextField texto3,JTextField texto4,JTextField texto5){

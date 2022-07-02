@@ -5,6 +5,5 @@ public class Vendedor extends Persona {
 
     public Vendedor(String nombre, String rut, int edad, int certificado) {
         super(nombre, rut, edad);
-        this.certificado = certificado;
     }
 }
